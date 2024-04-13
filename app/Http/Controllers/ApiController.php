@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class ApiController extends Controller
 {
@@ -15,8 +16,24 @@ class ApiController extends Controller
     }
 
     function testcustomerCards(){
-        $customers = DB::select('SELECT * FROM CustomerCard');
-        return response()->json($customers);
+        try {
+            $conn = new PDO("sqlsrv:server = tcp:stream-server.database.windows.net,1433; Database = YasirDB", "admin-server", "Asd1234*");
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        catch (PDOException $e) {
+            print("Error connecting to SQL Server.");
+            die(print_r($e));
+        }
+        
+        // SQL Server Extension Sample Code:
+        $connectionInfo = array("UID" => "admin-server", "pwd" => "Asd1234*", "Database" => "YasirDB", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+        $serverName = "tcp:stream-server.database.windows.net,1433";
+        $conn = sqlsrv_connect($serverName, $connectionInfo);
+        // if(DB::connection()->getPdo()){
+        //     echo "Successfully connected to DB and DB name is " . DB::connection()->getDatabaseName();
+        // }
+        // $customers = DB::select('SELECT * FROM CustomerCard');
+        // return response()->json($customers);
     }
 
     public function customerCards()
