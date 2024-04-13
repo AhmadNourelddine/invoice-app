@@ -16,7 +16,7 @@ class ApiController extends Controller
     }
 
     function testcustomerCards(){
-        phpinfo();
+        // phpinfo();
         // try {
         //     $conn = new PDO("sqlsrv:server = tcp:stream-server.database.windows.net,1433; Database = YasirDB", "admin-server", "Asd1234*");
         //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,14 +27,14 @@ class ApiController extends Controller
         // }
         
         // // SQL Server Extension Sample Code:
-        $connectionInfo = array("UID" => "admin-server", "pwd" => "Asd1234*", "Database" => "YasirDB", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
-        $serverName = "tcp:stream-server.database.windows.net,1433";
-        $conn = sqlsrv_connect($serverName, $connectionInfo);
+        // $connectionInfo = array("UID" => "admin-server", "pwd" => "Asd1234*", "Database" => "YasirDB", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+        // $serverName = "tcp:stream-server.database.windows.net,1433";
+        // $conn = sqlsrv_connect($serverName, $connectionInfo);
         if(DB::connection()->getPdo()){
             echo "Successfully connected to DB and DB name is " . DB::connection()->getDatabaseName();
         }
-        // $customers = DB::select('SELECT * FROM CustomerCard');
-        // return response()->json($customers);
+        $customers = DB::select('SELECT * FROM CustomerCard');
+        return response()->json($customers);
     }
 
     public function customerCards()
