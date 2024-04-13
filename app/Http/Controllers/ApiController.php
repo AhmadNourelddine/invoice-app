@@ -16,7 +16,7 @@ class ApiController extends Controller
     }
 
     function testcustomerCards(){
-        // phpinfo();
+         phpinfo();
         // try {
         //     $conn = new PDO("sqlsrv:server = tcp:stream-server.database.windows.net,1433; Database = YasirDB", "admin-server", "Asd1234*");
         //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
