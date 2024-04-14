@@ -3,9 +3,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 
-Route::get('/test', [ApiController::class, 'testAPI']);
-Route::get('/test-customer-cards', [ApiController::class, 'testcustomerCards']);
-Route::get('/customer-cards', [ApiController::class, 'customerCards']);
+Route::get('/testDB', [ApiController::class, 'testDBconnection']);
+Route::get('/dummy-customer-cards', [ApiController::class, 'dummyCustomerCards']);
+Route::get('/customer-catrds', [ApiController::class, 'customerCards']);
+Route::get('/array-data', [ApiController::class, 'getArrayData']);
+Route::get('/transactions', [ApiController::class, 'transactions']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
