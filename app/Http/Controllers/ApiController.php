@@ -303,7 +303,7 @@ class ApiController extends Controller
             'UserName' => 'required|unique:Users',
             'Password' => 'required',
         ]);
-
+        \Log::info(json_encode($request));
         // Check if username already exists
         $existingUser = User::where('UserName', $request->UserName)->first();
 
@@ -315,9 +315,9 @@ class ApiController extends Controller
         // Create new user
         $user = new User();
         $user->UserName = $request->UserName;
-        $user->Password = bcrypt($request->Password); // Hash the password for security
+        $user->Password =$request->Password;
         $user->save();
-
+        \Log::info(json_encode($user));
         // Return user id on success
         return response()->json(['id' => $user->id], 200);
     }
