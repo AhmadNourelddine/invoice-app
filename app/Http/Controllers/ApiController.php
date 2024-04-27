@@ -7,6 +7,7 @@ use Validator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use PDO;
+use App\Models\User;
 
 class ApiController extends Controller
 {
@@ -293,6 +294,32 @@ class ApiController extends Controller
         
 
         return response()->json($suppliers);
+    }
+
+    public function register(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'UserName' => 'required|unique:Users',
+            'Password' => 'required',
+        ]);
+
+        // Check if username already exists
+        $existingUser = User::where('UserName', $request->UserName)->first();
+
+        if ($existingUser) {
+            // Username already exists, return -1
+            return response()->json(['error' => 'UserName already exists'], 400);
+        }
+
+        // Create new user
+        $user = new User();
+        $user->UserName = $request->UserName;
+        $user->Password = bcrypt($request->Password); // Hash the password for security
+        $user->save();
+
+        // Return user id on success
+        return response()->json(['id' => $user->id], 200);
     }
 
     function sqlToPhpArray($sql) {
