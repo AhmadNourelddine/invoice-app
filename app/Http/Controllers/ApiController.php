@@ -254,6 +254,47 @@ class ApiController extends Controller
         return response()->json($customers);
     }
 
+    public function dummySupplierCards()
+    {
+        $suppliers = [
+            [
+                'Id' => 1,
+                'SupplierName' => 'Supplier A',
+                'Phone' => '123-456-7890',
+                'Email' => 'supplierA@example.com',
+                'Address' => '123 Main St, City, Country',
+                'Balance' => 1000.00,
+            ],
+            [
+                'Id' => 2,
+                'SupplierName' => 'Supplier B',
+                'Phone' => '987-654-3210',
+                'Email' => 'supplierB@example.com',
+                'Address' => '456 Elm St, Town, Country',
+                'Balance' => 500.50,
+            ],
+            [
+                'Id' => 3,
+                'SupplierName' => 'Supplier C',
+                'Phone' => '555-555-5555',
+                'Email' => 'supplierC@example.com',
+                'Address' => '789 Oak St, Village, Country',
+                'Balance' => 750.75,
+            ],
+            [
+                'Id' => 4,
+                'SupplierName' => 'Supplier D',
+                'Phone' => '111-222-3333',
+                'Email' => 'supplierD@example.com',
+                'Address' => '321 Pine St, Hamlet, Country',
+                'Balance' => 1200.25,
+            ]
+        ];
+        
+
+        return response()->json($suppliers);
+    }
+
     function sqlToPhpArray($sql) {
         // Remove "INSERT INTO YourTableName" part
         $sql = preg_replace('/INSERT INTO YourTableName/', '', $sql);
