@@ -298,12 +298,13 @@ class ApiController extends Controller
 
     public function register(Request $request)
     {   
+        \Log::info(json_encode($request->all()));
         // Validate incoming request
         $request->validate([
             'UserName' => 'required|unique:Users',
             'Password' => 'required',
         ]);
-
+        
         // Check if username already exists
         $existingUser = User::where('UserName', $request->UserName)->first();
 
