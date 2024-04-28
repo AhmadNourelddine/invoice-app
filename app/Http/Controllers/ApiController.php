@@ -301,13 +301,13 @@ class ApiController extends Controller
         \Log::info(json_encode($request->all()));
         // Validate incoming request
         $request->validate([
-            'UserName' => 'required|unique:Users',
+            'UserName' => 'required',
             'Password' => 'required',
         ]);
     
         // Check if username already exists
         $existingUser = User::where('UserName', $request->UserName)->first();
-    
+        \Log::info($existingUser); 
         if ($existingUser) {
             // Username already exists, return -1
             return -1;
