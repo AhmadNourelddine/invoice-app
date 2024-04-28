@@ -297,30 +297,30 @@ class ApiController extends Controller
     }
 
     public function register(Request $request)
-    {   
+    {
         \Log::info(json_encode($request->all()));
         // Validate incoming request
         $request->validate([
             'UserName' => 'required|unique:Users',
             'Password' => 'required',
         ]);
-        
+    
         // Check if username already exists
         $existingUser = User::where('UserName', $request->UserName)->first();
-
+    
         if ($existingUser) {
             // Username already exists, return -1
-            return response()->json(['error' => 'UserName already exists'], 400);
+            return -1;
         }
-
+    
         // Create new user
         $user = new User();
         $user->UserName = $request->UserName;
-        $user->Password =$request->Password;
+        $user->Password = $request->Password;
         $user->save();
         \Log::info(json_encode($user));
         // Return user id on success
-        return response()->json(['id' => $user->id], 200);
+        return $user->id;
     }
 
     function sqlToPhpArray($sql) {
