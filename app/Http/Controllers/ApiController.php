@@ -391,7 +391,7 @@ class ApiController extends Controller
     
         // Call the stored procedure
         try {
-            $results = DB::select('EXEC SF_InsertCustomerCard ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
+            DB::statement('EXEC SF_InsertCustomerCard ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
                 $customerName,
                 $phone,
                 $email,
@@ -402,14 +402,11 @@ class ApiController extends Controller
                 $sarf,
                 $balanceDollar
             ));
-            
-            // Handle successful execution
-            return $results;
-            \Log::info($results);
+
+            return 1;
         } catch (\Exception $e) {
-            // Handle database error
             \Log::info($e);
-            return response()->json(['error' => 'Database error'], 500);
+            return -1;
         }
     }
 
