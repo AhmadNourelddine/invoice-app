@@ -20,7 +20,7 @@ class ApiController extends Controller
     }
 
     public function customerCards(){
-        $customers = DB::select('SELECT * FROM CustomerCard');
+        $customers = DB::select('SELECT * FROM CustomerCard ORDER BY EntryDate DESC');
         return response()->json($customers);
     }
 
