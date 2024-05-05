@@ -10,6 +10,7 @@ Route::get('/customer-catrds', [ApiController::class, 'customerCards']);
 Route::get('/array-data', [ApiController::class, 'getArrayData']);
 Route::get('/transactions', [ApiController::class, 'transactions']);
 Route::post('/register', [ApiController::class, 'register']);
+Route::post('/add-customer', [ApiController::class, 'addCustomer']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

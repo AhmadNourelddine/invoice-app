@@ -375,6 +375,46 @@ class ApiController extends Controller
         return $user->id;
     }
 
+    public function addCustomer(Request $request)
+    {
+        \Log::info(json_encode($request->all()));
+        // Validate incoming request
+        $id = $request->input('Id');
+        $customerName = $request->input('CustomerName');
+        $phone = $request->input('Phone');
+        $email = $request->input('Email');
+        $address = $request->input('Address');
+        $balance = $request->input('Balance');
+        $entryDate = $request->input('EntryDate');
+        $balanceLira = $request->input('BalanceLira');
+        $adds = $request->input('Adds');
+        $sarf = $request->input('Sarf');
+        $balanceDollar = $request->input('BalanceDollar');
+    
+        // Call the stored procedure
+        try {
+            $results = DB::select('EXEC YourStoredProcedureName ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
+                $id,
+                $customerName,
+                $phone,
+                $email,
+                $address,
+                $balance,
+                $entryDate,
+                $balanceLira,
+                $adds,
+                $sarf,
+                $balanceDollar
+            ));
+            
+            // Handle successful execution
+            return $results;
+        } catch (\Exception $e) {
+            // Handle database error
+            return response()->json(['error' => 'Database error'], 500);
+        }
+    }
+
     function sqlToPhpArray($sql) {
         // Remove "INSERT INTO YourTableName" part
         $sql = preg_replace('/INSERT INTO YourTableName/', '', $sql);
