@@ -393,7 +393,7 @@ class ApiController extends Controller
     
         // Call the stored procedure
         try {
-            $results = DB::select('EXEC YourStoredProcedureName ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
+            $results = DB::select('EXEC SF_InsertCustomerCard ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
                 $id,
                 $customerName,
                 $phone,
