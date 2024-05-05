@@ -379,7 +379,6 @@ class ApiController extends Controller
     {
         \Log::info(json_encode($request->all()));
         // Validate incoming request
-        $id = $request->input('Id');
         $customerName = $request->input('CustomerName');
         $phone = $request->input('Phone');
         $email = $request->input('Email');
@@ -387,14 +386,12 @@ class ApiController extends Controller
         $balance = $request->input('Balance');
         $entryDate = $request->input('EntryDate');
         $balanceLira = $request->input('BalanceLira');
-        $adds = $request->input('Adds');
         $sarf = $request->input('Sarf');
         $balanceDollar = $request->input('BalanceDollar');
     
         // Call the stored procedure
         try {
-            $results = DB::select('EXEC SF_InsertCustomerCard ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
-                $id,
+            $results = DB::select('EXEC SF_InsertCustomerCard ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
                 $customerName,
                 $phone,
                 $email,
@@ -402,15 +399,16 @@ class ApiController extends Controller
                 $balance,
                 $entryDate,
                 $balanceLira,
-                $adds,
                 $sarf,
                 $balanceDollar
             ));
             
             // Handle successful execution
             return $results;
+            \Log::info($results);
         } catch (\Exception $e) {
             // Handle database error
+            \Log::info($e);
             return response()->json(['error' => 'Database error'], 500);
         }
     }
