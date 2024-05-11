@@ -20,8 +20,13 @@ class ApiController extends Controller
     }
 
     public function customerCards(){
-        $customers = DB::select('SELECT * FROM CustomerCard ORDER BY EntryDate DESC');
-        return response()->json($customers);
+        $data = DB::select('SELECT * FROM CustomerCard ORDER BY EntryDate DESC');
+        return response()->json($data);
+    }
+
+    public function supplierCards(){
+        $data = DB::select('SELECT * FROM SupplierCard ORDER BY EntryDate DESC');
+        return response()->json($data);
     }
 
     public function transactions(){
@@ -401,6 +406,33 @@ class ApiController extends Controller
                 $balanceLira,
                 $sarf,
                 $balanceDollar
+            ));
+
+            return 1;
+        } catch (\Exception $e) {
+            \Log::info($e);
+            return -1;
+        }
+    }
+
+    public function addSupplier(Request $request)
+    {
+        \Log::info(json_encode($request->all()));
+        // Validate incoming request
+        $supplierName = $request->input('SupplierName');
+        $phone = $request->input('Phone');
+        $email = $request->input('Email');
+        $address = $request->input('Address');
+        $balance = $request->input('Balance');
+    
+        // Call the stored procedure
+        try {
+            DB::statement('EXEC SF_InsertSupplierCard ?, ?, ?, ?, ?', array(
+                $supplierName,
+                $phone,
+                $email,
+                $address,
+                $balance
             ));
 
             return 1;
