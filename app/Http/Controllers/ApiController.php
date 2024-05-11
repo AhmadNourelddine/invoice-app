@@ -29,6 +29,11 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
+    public function saleCards(){
+        $data = DB::select('SELECT * FROM Sale');
+        return response()->json($data);
+    }
+
     public function transactions(){
 
         $records = array(

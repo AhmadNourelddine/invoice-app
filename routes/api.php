@@ -8,6 +8,7 @@ Route::get('/dummy-customer-cards', [ApiController::class, 'dummyCustomerCards']
 Route::get('/dummy-supplier-cards', [ApiController::class, 'dummySupplierCards']);
 Route::get('/supplier-cards', [ApiController::class, 'supplierCards']);
 Route::get('/customer-cards', [ApiController::class, 'customerCards']);
+Route::get('/sale-cards', [ApiController::class, 'saleCards']);
 Route::get('/array-data', [ApiController::class, 'getArrayData']);
 Route::get('/transactions', [ApiController::class, 'transactions']);
 Route::post('/register', [ApiController::class, 'register']);
