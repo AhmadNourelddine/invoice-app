@@ -6,6 +6,8 @@ use App\Http\Controllers\ApiController;
 Route::get('/testDB', [ApiController::class, 'testDBconnection']);
 Route::get('/dummy-customer-cards', [ApiController::class, 'dummyCustomerCards']);
 Route::get('/dummy-supplier-cards', [ApiController::class, 'dummySupplierCards']);
+Route::get('/dummy-sale-statements', [ApiController::class, 'dummySaleStatements']);
+Route::get('/dummy-purchase-statements', [ApiController::class, 'dummyPurchaseStatements']);
 Route::get('/supplier-cards', [ApiController::class, 'supplierCards']);
 Route::get('/customer-cards', [ApiController::class, 'customerCards']);
 Route::get('/sale-cards', [ApiController::class, 'saleCards']);

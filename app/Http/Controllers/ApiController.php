@@ -358,6 +358,42 @@ class ApiController extends Controller
         return response()->json($suppliers);
     }
 
+    public function dummyPurchaseStatements() {
+        $dummyData = [];
+        $count=5;
+        for ($i = 0; $i < $count; $i++) {
+            $dummyData[] = [
+                'PurId' => $i + 1,
+                'EntryDate' => '2024-05-16',
+                'SupplierName' => 'Supplier ' . ($i + 1),
+                'Description' => 'Description ' . ($i + 1),
+                'Total' => rand(100, 1000) / 10,
+                'TotalD' => rand(100, 1000) / 10,
+            ];
+        }
+        return response()->json($dummyData);
+    }
+    
+    public function dummySaleStatements() {
+        $dummyData = [];
+        $count=5;
+        for ($i = 0; $i < $count; $i++) {
+            $dummyData[] = [
+                'SaleId' => $i + 1,
+                'EntryDate' => '2024-05-16',
+                'CustomerName' => 'Customer ' . ($i + 1),
+                'Description' => 'Description ' . ($i + 1),
+                'Total' => rand(100, 1000) / 10,
+                'TotalD' => rand(100, 1000) / 10,
+                'Expenses' => rand(50, 500) / 10,
+                'TotalLira' => rand(1000, 10000) / 10,
+                'TotalLiraD' => rand(1000, 10000) / 10,
+                'CashType' => 'CashType ' . ($i + 1)
+            ];
+        }
+        return response()->json($dummyData);
+    }
+    
     public function register(Request $request)
     {
         \Log::info(json_encode($request->all()));
@@ -446,37 +482,39 @@ class ApiController extends Controller
             return -1;
         }
     }
+    
+    public function addSale(Request $request)
+    {
+        \Log::info(json_encode($request->all()));
+        // Validate incoming request
+        $customerName = $request->input('CustomerName');
+        $phone = $request->input('Phone');
+        $email = $request->input('Email');
+        $address = $request->input('Address');
+        $balance = $request->input('Balance');
+        $entryDate = $request->input('EntryDate');
+        $balanceLira = $request->input('BalanceLira');
+        $sarf = $request->input('Sarf');
+        $balanceDollar = $request->input('BalanceDollar');
+    
+        // Call the stored procedure
+        try {
+            DB::statement('EXEC SF_InsertCustomerCard ?, ?, ?, ?, ?, ?, ?, ?, ?', array(
+                $customerName,
+                $phone,
+                $email,
+                $address,
+                $balance,
+                $entryDate,
+                $balanceLira,
+                $sarf,
+                $balanceDollar
+            ));
 
-    function sqlToPhpArray($sql) {
-        // Remove "INSERT INTO YourTableName" part
-        $sql = preg_replace('/INSERT INTO YourTableName/', '', $sql);
-        
-        // Remove parentheses and split values
-        $values = explode(',', trim($sql, "();"));
-        
-        $result = [];
-        foreach ($values as $value) {
-            // Remove parentheses and split each value
-            $fields = explode(',', trim($value, "()"));
-            $entry = [];
-            foreach ($fields as $field) {
-                // Split field into key and value
-                $pair = explode(',', $field);
-                if (count($pair) === 2) {
-                    $entry[trim($pair[0])] = trim($pair[1]);
-                } else {
-                    // Log or handle the case where the pair is not of length 2
-                    // For now, we'll just ignore it
-                }
-            }
-            $result[] = $entry;
+            return 1;
+        } catch (\Exception $e) {
+            \Log::info($e);
+            return -1;
         }
-        return $result;
-    }
-
-    public function getArrayData(){
-        $sql = "INSERT INTO YourTableName (Id, SaleId, SaleRId, PurId, PurRId, ProdId, TransId, EntryDate, Code, ItemName, Input, InputR, Output, OutputR, TransInput, TransOutput, Cost, Price, Total, Offer, ItemId, InventoryId, InventoryName, LaborPay, TotalLaborPay, LoadPay, TotalLoadPay, Expenses, TVA, TVAD, TotalLira, Sarf, Is_Deleted) VALUES (1, 101, 201, 301, 401, 501, 601, '2024-04-14', 'ABC001', 'Item 1', 10.5, 0, 0, 0, 0, 0, 5.5, 15.5, 100, 0, 1, 1001, 'Inventory 1', 20.5, 30.5, 40.5, 50.5, 1, 10.5, 20.5, 100.5, 0, 0), (2, 102, 202, 302, 402, 502, 602, '2024-04-14', 'ABC002', 'Item 2', 20.5, 0, 0, 0, 0, 0, 10.5, 25.5, 200, 0, 2, 1002, 'Inventory 2', 30.5, 40.5, 50.5, 60.5, 1, 20.5, 30.5, 200.5, 0, 0), (3, 103, 203, 303, 403, 503, 603, '2024-04-14', 'ABC003', 'Item 3', 30.5, 0, 0, 0, 0, 0, 15.5, 35.5, 300, 0, 3, 1003, 'Inventory 3', 40.5, 50.5, 60.5, 70.5, 1, 30.5, 40.5, 300.5, 0, 0), (4, 104, 204, 304, 404, 504, 604, '2024-04-14', 'ABC004', 'Item 4', 40.5, 0, 0, 0, 0, 0, 20.5, 45.5, 400, 0, 4, 1004, 'Inventory 4', 50.5, 60.5, 70.5, 80.5, 1, 40.5, 50.5, 400.5, 0, 0), (5, 105, 205, 305, 405, 505, 605, '2024-04-14', 'ABC005', 'Item 5', 50.5, 0, 0, 0, 0, 0, 25.5, 55.5, 500, 0, 5, 1005, 'Inventory 5', 60.5, 70.5, 80.5, 90.5, 1, 50.5, 60.5, 500.5, 0, 0);";
-        $result = $this -> sqlToPhpArray($sql);
-        print_r($result);
     }
 }
