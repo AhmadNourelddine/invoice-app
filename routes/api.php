@@ -17,6 +17,7 @@ Route::get('/array-data', [ApiController::class, 'getArrayData']);
 Route::get('/transactions', [ApiController::class, 'transactions']);
 Route::get('/sale-statements', [ApiController::class, 'saleStatements']);
 Route::get('/purchase-statements', [ApiController::class, 'purchaseStatements']);
+Route::get('/inventory-cards', [ApiController::class, 'inventoryCards']);
 Route::post('/register', [ApiController::class, 'register']);
 Route::post('/add-customer', [ApiController::class, 'addCustomer']);
 Route::post('/add-supplier', [ApiController::class, 'addSupplier']);
