@@ -11,6 +11,8 @@ Route::get('/dummy-purchase-statements', [ApiController::class, 'dummyPurchaseSt
 Route::get('/supplier-cards', [ApiController::class, 'supplierCards']);
 Route::get('/customer-cards', [ApiController::class, 'customerCards']);
 Route::get('/sale-cards', [ApiController::class, 'saleCards']);
+Route::get('/sale-card-details', [ApiController::class, 'saleCardDetails']);
+Route::get('/sale-details', [ApiController::class, 'saleDetails']);
 Route::get('/array-data', [ApiController::class, 'getArrayData']);
 Route::get('/transactions', [ApiController::class, 'transactions']);
 Route::get('/sale-statements', [ApiController::class, 'saleStatements']);

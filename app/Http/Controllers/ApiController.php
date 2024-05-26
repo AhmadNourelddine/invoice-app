@@ -34,6 +34,24 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
+    public function saleCardDetails(Request $request)
+    {
+        \Log::info(json_encode($request->all()));
+        // Validate incoming request
+        $saleId= $request->input('SaleId');
+        // Call the stored procedure
+        try {
+            $result = DB::select('EXEC SF_SaleDetail ?', array(
+                $saleId
+            ));
+            return response()->json($result);
+
+        } catch (\Exception $e) {
+            \Log::info($e);
+            return -1;
+        }
+    }
+
     public function transactions(){
 
         $records = array(
@@ -526,5 +544,12 @@ class ApiController extends Controller
             \Log::info($e);
             return -1;
         }
+    }
+
+    public function saleDetails(Request $request){
+        $saleId= $request->input('SaleId');
+        \Log::info($saleId);
+        $data = DB::select('SELECT * FROM TransAct WHERE SaleId  = ?', [$saleId]);
+        return response()->json($data);
     }
 }
